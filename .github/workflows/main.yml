@@ -37,7 +37,7 @@ jobs:
       # Configure Application
       - name: Prepare The Application
         run: |
-          chmod 777 -R ./Application/storage/
+          chmod 777 -R ./Application/storage/*
           chmod 777 -R ./Domain/database/
           php -r "file_exists('.env') || copy('.env.example', '.env');"
           php -r "file_exists('./Domain/database/cybertill.sqlite') || copy('./Domain/database/cybertill.sqlite.example', './Domain/database/cybertill.sqlite');"
