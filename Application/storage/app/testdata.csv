@@ -1,0 +1,21 @@
+IP,Response Type,Response Time,Country Of Origin,Path
+192.168.0.6,200,164,Ukraine,/home
+192.168.0.2,200,770,United States,/profile
+192.168.0.5,200,426,United Kingdom,/profile
+192.168.0.4,500,27,France,/home
+192.168.0.5,200,178,United Kingdom,/profile
+192.168.0.6,200,519,Ukraine,/store
+192.168.0.7,407,495,Germany,/profile
+192.168.0.5,200,928,United Kingdom,/home
+192.168.0.1,200,165,China,/basket
+192.168.0.1,200,307,China,/store
+192.168.0.2,200,706,United States,/home
+192.168.0.2,200,344,United States,/basket
+192.168.0.1,500,955,China,/store
+192.168.0.8,200,678,Italy,/basket
+192.168.0.3,200,297,Norway,/basket
+192.168.0.4,200,494,France,/home
+192.168.0.1,200,391,China,/basket
+192.168.0.2,200,501,United States,/home
+192.168.0.5,200,574,United Kingdom,/home
+192.168.0.2,200,806,United States,/home

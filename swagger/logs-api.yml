@@ -1,0 +1,297 @@
+openapi: 3.0.0
+info:
+  title: 'Cybertill Developer Test API'
+  description: 'The backend API for the Cybertill Developer Test.'
+  contact:
+    email: amineabri@gmail.com
+  version: 0.0.1
+paths:
+  /api:
+    get:
+      summary: 'Display basic app information'
+      responses:
+        '200':
+          description: 'Display basic app information.'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/app-info'
+  /api/logs/without-pagination:
+    get:
+      tags:
+        - logs-without-pagination
+      summary: 'Get a list of logs without php pagination.'
+      description: 'Get a list of logs.'
+      operationId: getLogs
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/without-pagination'
+        '500':
+          description: 'Internal server error'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error5xx'
+  /api/logs/with-pagination:
+    get:
+      tags:
+        - logs-with-pagination
+      summary: 'Get a list of logs with php pagination.'
+      description: 'Get a list of logs.'
+      operationId: getLogsWithPagination
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/with-pagination'
+        '500':
+          description: 'Internal server error'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error5xx'
+components:
+  schemas:
+    error200:
+      properties:
+        data:
+          description: 'List of logs'
+          type: array
+          items:
+            properties:
+              ref:
+                description: 'The log''s UUID'
+                type: string
+              countryOfOrigin:
+                description: 'The country of origin'
+                type: string
+              responseTime:
+                description: 'The proportions of requests from each Country.'
+                type: integer
+              children:
+                description: 'List of logs assigned to this country'
+                type: array
+                items:
+                  properties: { uuid: { description: 'The log''s UUID', type: string }, ipAddress: { description: 'The ip address', type: string }, responseType: { description: 'The response type.', type: integer }, responseTime: { description: 'The response time.', type: integer }, countryOfOrigin: { description: 'The country of origin.', type: string }, path: { description: 'The path.', type: string }, createdAt: { description: 'The creation date.', type: string }, updatedAt: { description: 'The updating date.', type: string } }
+                  type: object
+            type: object
+        settings:
+          description: 'The settings.'
+          type: object
+          items:
+            properties:
+              totalOfRequestRecorded:
+                description: 'The total of request recorded'
+                type: integer
+            type: object
+      type: object
+      example:
+        data:
+          ref: 5a156447-2127-4c6b-a25c-03355233d13b
+          countryOfOrigin: Ukraine
+          responseTime: 7.02
+          children:
+            -
+              uuid: 4137e2b8-daed-447f-85c9-21a5b06d3146
+              ipAddress: 192.168.0.6
+              responseType: 200
+              responseTime: 164
+              countryOfOrigin: Ukraine
+              path: /home
+              createdAt: '2020-08-23T13:19:32.000000Z'
+              updatedAt: '2020-08-23T13:19:32.000000Z'
+        settings:
+          totalOfRequestRecorded: 40
+    error5xx:
+      properties:
+        code:
+          description: 'The HTTP error code.'
+          type: integer
+        message:
+          description: 'The error message.'
+          type: string
+      type: object
+      example:
+        message: 'Internal server error.'
+        code: 500
+    app-info:
+      properties:
+        application:
+          description: 'The name of the application.'
+          type: string
+        version:
+          description: 'The version of the application.'
+          type: string
+        time:
+          description: 'The current time.'
+          type: integer
+        documentation:
+          description: 'The link to the documenttation page.'
+          type: integer
+      type: object
+      example:
+        application: 'Cybertill Developer Test API'
+        version: 0.0.1
+        time: 1563375945
+        documentation: 'https://localhost/api/v1/documentation'
+    with-pagination:
+      properties:
+        data:
+          description: 'List of logs'
+          type: array
+          items:
+            properties:
+              ref:
+                description: 'The log''s UUID'
+                type: string
+              countryOfOrigin:
+                description: 'The country of origin'
+                type: string
+              responseTime:
+                description: 'The proportions of requests from each Country.'
+                type: integer
+              children:
+                description: 'List of logs assigned to this country'
+                type: array
+                items:
+                  properties: { uuid: { description: 'The log''s UUID', type: string }, ipAddress: { description: 'The ip address', type: string }, responseType: { description: 'The response type.', type: integer }, responseTime: { description: 'The response time.', type: integer }, countryOfOrigin: { description: 'The country of origin.', type: string }, path: { description: 'The path.', type: string }, createdAt: { description: 'The creation date.', type: string }, updatedAt: { description: 'The updating date.', type: string } }
+                  type: object
+            type: object
+        links:
+          description: 'The pagination links.'
+          type: object
+          items:
+            properties:
+              first:
+                description: 'The first page'
+                type: string
+              last:
+                description: 'The last page'
+                type: string
+              prev:
+                description: 'The previous page'
+                type: string
+              next:
+                description: 'The next page'
+                type: string
+            type: object
+        meta:
+          description: 'The meta data'
+          type: object
+          items:
+            properties:
+              current_page:
+                description: 'The current page number'
+                type: string
+              from:
+                description: 'The first page number'
+                type: integer
+              last_page:
+                description: 'The last page number'
+                type: integer
+              path:
+                description: 'The path'
+                type: string
+              per_page:
+                description: 'The number of items per page'
+                type: string
+              to:
+                description: 'The distination page'
+                type: integer
+              total:
+                description: 'The total of recors'
+                type: integer
+            type: object
+        totalOfRequestRecorded:
+          description: 'The meta data'
+          type: string
+      type: object
+      example:
+        data:
+          ref: 5a156447-2127-4c6b-a25c-03355233d13b
+          countryOfOrigin: Ukraine
+          responseTime: 7.02
+          children:
+            -
+              uuid: 4137e2b8-daed-447f-85c9-21a5b06d3146
+              ipAddress: 192.168.0.6
+              responseType: 200
+              responseTime: 164
+              countryOfOrigin: Ukraine
+              path: /home
+              createdAt: '2020-08-23T13:19:32.000000Z'
+              updatedAt: '2020-08-23T13:19:32.000000Z'
+        meta:
+          current_page: 1
+          from: 1
+          last_page: 1
+          path: 'http://localhost'
+          per_page: '10'
+          to: 8
+          total: 8
+        totalOfRequestRecorded: 40
+    without-pagination:
+      properties:
+        data:
+          description: 'List of logs'
+          type: array
+          items:
+            properties:
+              ref:
+                description: 'The log''s UUID'
+                type: string
+              countryOfOrigin:
+                description: 'The country of origin'
+                type: string
+              responseTime:
+                description: 'The proportions of requests from each Country.'
+                type: integer
+              children:
+                description: 'List of logs assigned to this country'
+                type: array
+                items:
+                  properties: { uuid: { description: 'The log''s UUID', type: string }, ipAddress: { description: 'The ip address', type: string }, responseType: { description: 'The response type.', type: integer }, responseTime: { description: 'The response time.', type: integer }, countryOfOrigin: { description: 'The country of origin.', type: string }, path: { description: 'The path.', type: string }, createdAt: { description: 'The creation date.', type: string }, updatedAt: { description: 'The updating date.', type: string } }
+                  type: object
+            type: object
+        settings:
+          description: 'The settings.'
+          type: object
+          items:
+            properties:
+              totalOfRequestRecorded:
+                description: 'The total of request recorded'
+                type: integer
+            type: object
+      type: object
+      example:
+        data:
+          ref: 5a156447-2127-4c6b-a25c-03355233d13b
+          countryOfOrigin: Ukraine
+          responseTime: 7.02
+          children:
+            -
+              uuid: 4137e2b8-daed-447f-85c9-21a5b06d3146
+              ipAddress: 192.168.0.6
+              responseType: 200
+              responseTime: 164
+              countryOfOrigin: Ukraine
+              path: /home
+              createdAt: '2020-08-23T13:19:32.000000Z'
+              updatedAt: '2020-08-23T13:19:32.000000Z'
+        settings:
+          totalOfRequestRecorded: 40
+externalDocs:
+  description: 'Find out more about the app'
+  url: 'https://github.com/amineabri/cybertil-tech-test/blob/master/README.md'
