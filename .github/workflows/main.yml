@@ -65,4 +65,5 @@ jobs:
       # Unit Test
       - name: Run PHPUnit Test
         run: |
-          ls vendor/
+          chmod 777 -R vendor/
+          ./vendor/bin/phpunit
