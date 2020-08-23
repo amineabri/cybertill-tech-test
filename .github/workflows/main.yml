@@ -66,4 +66,5 @@ jobs:
       - name: Run PHPUnit Test
         run: |
           chmod 777 -R vendor/
+          composer update
           ./vendor/bin/phpunit
