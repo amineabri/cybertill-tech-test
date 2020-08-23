@@ -43,3 +43,9 @@ jobs:
           php -r "file_exists('./Domain/database/cybertill.sqlite') || copy('./Domain/database/cybertill.sqlite.example', './Domain/database/cybertill.sqlite');"
           php artisan cache:clear
           php artisan migrate:refresh
+          
+      # Save Composer Artifacts
+      - uses: actions/upload-artifact@master
+        with:
+          name: composer-artifact
+          path: vendor
